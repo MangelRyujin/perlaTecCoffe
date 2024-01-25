@@ -47,6 +47,8 @@ LOCAL_APPS = [
 
 THIRD_APPS = [
     'rest_framework',
+    'corsheaders',
+    'drf_yasg',
 ]
 
 
