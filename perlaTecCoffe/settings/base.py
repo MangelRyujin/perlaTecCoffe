@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 import os
+from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -50,6 +51,10 @@ THIRD_APPS = [
     'rest_framework',
     'corsheaders',
     'drf_yasg',
+    'rest_framework.authtoken',
+    'rest_framework_simplejwt',
+    'rest_framework_simplejwt.token_blacklist',
+    'dj_rest_auth',
 ]
 
 
@@ -136,6 +141,39 @@ TIME_ZONE = "UTC"
 USE_I18N = True
 
 USE_TZ = True
+
+
+# User Model
+AUTH_USER_MODEL = 'users.user'
+
+
+# REST_FRAMEWORK configuration
+REST_FRAMEWORK = {
+    
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'dj_rest_auth.jwt_auth.JWTCookieAuthentication',
+    )
+    
+}
+
+
+# REST_AUTH configuration
+REST_AUTH = {
+    'USE_JWT': True,
+    "JWT_AUTH_COOKIE": "jwt-auth",
+    "JWT_AUTH_HTTPONLY": False,
+    "LOGIN_SERIALIZER": "apps.users.api.serializers.login_serializer.EmailVerificationLoginSerializer",
+    "PASSWORD_RESET_SERIALIZER": "apps.users.api.serializers.pass_reset_serializer.CustomPasswordResetSerializer",
+    'USER_DETAILS_SERIALIZER': 'apps.users.api.serializers.login_serializer.CustomUserDetailsSerializer',
+}
+
+# SIMPLE_JWT configuration
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=1),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+    'ROTATE_REFRESH_TOKENS': True,
+    'BLACKLIST_AFTER_ROTATION': True,
+}
 
 
 # Static files (CSS, JavaScript, Images)
