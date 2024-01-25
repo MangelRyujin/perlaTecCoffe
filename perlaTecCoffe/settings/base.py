@@ -56,6 +56,7 @@ THIRD_APPS = [
 INSTALLED_APPS = BASE_APPS + LOCAL_APPS + THIRD_APPS
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -85,6 +86,15 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "perlaTecCoffe.wsgi.application"
 
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:42162",
+]
+
+
+CORS_ORIGIN_WHITELIST =[
+    "http://localhost:42162",
+]
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
