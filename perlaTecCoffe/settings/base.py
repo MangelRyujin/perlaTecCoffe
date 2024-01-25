@@ -25,9 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-rg_jt5k*xa7)+b3ci@5u$_$r0)i5l@dt_5bxh46&v3lc5i5&90"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
-ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -93,23 +91,16 @@ WSGI_APPLICATION = "perlaTecCoffe.wsgi.application"
 
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:42162",
+    "http://localhost:3000",
+    "http://127.0.0.1:9000"
 ]
 
 
 CORS_ORIGIN_WHITELIST =[
-    "http://localhost:42162",
+    "http://localhost:3000",
+    "http://127.0.0.1:9000"
 ]
 
-# Database
-# https://docs.djangoproject.com/en/5.0/ref/settings/#databases
-
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
-}
 
 
 # Password validation
@@ -179,7 +170,6 @@ SIMPLE_JWT = {
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = "static/"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
