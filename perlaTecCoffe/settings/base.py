@@ -42,6 +42,7 @@ BASE_APPS = [
 LOCAL_APPS = [
     'apps.restaurant',
     'apps.users',
+    'apps.products',
 ]
 
 
