@@ -4,6 +4,8 @@ from django.db import models
 
 
 
+
+
 class Category(models.Model):
     
     category_name = models.CharField('Name of category', max_length=255, blank=False , null=False, unique=True)
@@ -24,6 +26,7 @@ class Product(models.Model):
     """Model definition for Product."""
     product_name = models.CharField('Name of product', max_length=255, blank=False , null=False)
     cost = models.DecimalField('Cost', max_digits=10,  decimal_places=2, blank= False, null= False)
+    active = models.BooleanField(default=True)
     discount = models.PositiveIntegerField('Discount of product in %', default=0, blank=False, null=False)
     image = models.ImageField('Image of product', upload_to='product_image/', blank=True, null=True)
     category = models.ForeignKey(Category,related_name='productCategory', on_delete=models.CASCADE, verbose_name='Category',blank=False, null= False)
@@ -36,7 +39,7 @@ class Product(models.Model):
         verbose_name_plural = 'Products'
 
     def __str__(self):
-        return self.product_name
+        return f'id: {self.id}. {self.product_name}'
     
     
 
@@ -56,7 +59,7 @@ class Aggregate(models.Model):
         verbose_name_plural = 'Aggregates'
 
     def __str__(self):
-        return self.agregate_name
+        return f'id:{self.id} {self.agregate_name}. id:{self.product.id} Product {self.product.product_name}'
 
 
 class Ingredient(models.Model):

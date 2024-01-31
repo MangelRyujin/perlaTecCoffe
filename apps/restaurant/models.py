@@ -60,4 +60,4 @@ class Table(models.Model):
         verbose_name_plural = 'Tables'
 
     def __str__(self):
-        return f'Local {self.lounge.local.local_name}. Lounge {self.lounge.lounge_name} table #{self.number} '
+        return f'id: {self.id}. Local {self.lounge.local.local_name}. Lounge {self.lounge.lounge_name} table #{self.number} '
