@@ -18,6 +18,7 @@ transfer = openapi.Parameter('transfer', openapi.IN_QUERY, description="enter tr
 cash = openapi.Parameter('cash', openapi.IN_QUERY, description="enter cash", type=openapi.TYPE_NUMBER)
 order = openapi.Parameter('order', openapi.IN_QUERY, description="enter order", type=openapi.TYPE_NUMBER)
 table = openapi.Parameter('table', openapi.IN_QUERY, description="enter table", type=openapi.TYPE_NUMBER)
+item = openapi.Parameter('item', openapi.IN_QUERY, description="enter item", type=openapi.TYPE_NUMBER)
 
 
 
@@ -68,7 +69,6 @@ class OrderViewSet(viewsets.GenericViewSet):
     @action(detail = False, methods = ['post'])
     def createItemOrder(self,request):
         order = get_object_or_404(Order, pk = request.data['order'])
-        print(request.data)
         if order.state =='Unpaid':
             product = get_object_or_404(Product, pk = request.data['product'])
             data = {'order':order.id , 'product': product.id, 'cant':request.data['cant'], 'amount': Decimal(product.cost*int(request.data['cant'])),'aggregateitemItems':request.data['aggregateitemItems']}
@@ -152,3 +152,31 @@ class OrderViewSet(viewsets.GenericViewSet):
             return Response({'error':'Esta cuenta no contiene pedidos'},status=status.HTTP_400_BAD_REQUEST)
         return Response({'error':'Esta cuenta ya ha sido pagada'},status=status.HTTP_400_BAD_REQUEST)
     
+    
+    def destroy(self, request, pk = None):
+        
+        category = self.get_queryset(pk)
+        if category:
+            category.delete()
+            return Response({'message':'La categoría ha sido eliminado correctamente!'}, status = status.HTTP_200_OK)
+        return Response({'error':'No existe la categoría que desea eliminar!'},status = status.HTTP_404_NOT_FOUND)
+
+
+    #method for delete order
+    @swagger_auto_schema(manual_parameters=[order])
+    @action(detail = False, methods = ['delete'])
+    def deleteOrder(self,request):
+        order = get_object_or_404(Order, pk = request.data['order'])
+        if order.state =='Unpaid':
+            order.delete()
+            return Response({'message':'Orden cancelada'},status=status.HTTP_200_OK)
+        return Response({'error':'la orden ya esta pagada'},status=status.HTTP_400_BAD_REQUEST)
+    
+    
+    #method for delete item of order
+    @swagger_auto_schema(manual_parameters=[item])
+    @action(detail = False, methods = ['delete'])
+    def createItemOrder(self,request):
+        item = get_object_or_404(Items, pk = request.data['item'])
+        item.delete()
+        return Response({'message':'Pedido cancelado'},status=status.HTTP_200_OK)
