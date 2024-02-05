@@ -48,7 +48,7 @@ class Order(TimeTransfer):
     
     def paidOrder(self):
         self.state = 'Paid'
-        self.save
+        self.save()
     
 # itemsOrder  
 class Items(models.Model):

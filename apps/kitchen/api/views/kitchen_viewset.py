@@ -19,8 +19,8 @@ class ItemsKitchenViewSet(viewsets.GenericViewSet):
     
     def get_queryset(self,pk = None):
         if pk is None:
-            return self.get_serializer().Meta.model.objects.exclude(state='Finished')
-        return self.get_serializer().Meta.model.objects.exclude(state='Finished').first()
+            return self.get_serializer().Meta.model.objects.exclude(state='Finished').exclude(product__elaboration='Bar').exclude(product__elaboration='Waiter')
+        return self.get_serializer().Meta.model.objects.exclude(state='Finished').exclude(product__elaboration='Bar').exclude(product__elaboration='Waiter').first()
 
     
     #method list all items with state exclude Finished
