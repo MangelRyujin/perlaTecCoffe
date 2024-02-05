@@ -14,14 +14,14 @@ from apps.orders.models import Items
 item = openapi.Parameter('item', openapi.IN_QUERY, description="enter item", type=openapi.TYPE_NUMBER)
 
 
-class ItemsKitchenViewSet(viewsets.GenericViewSet):
+class ItemsBarViewSet(viewsets.GenericViewSet):
     serializer_class= ItemsKitchenSerializer
     permission_classes = (IsAuthenticated,)
     
     def get_queryset(self,pk = None):
         if pk is None:
-            return self.get_serializer().Meta.model.objects.exclude(state='Finished').exclude(product__elaboration='Bar').exclude(product__elaboration='Waiter')
-        return self.get_serializer().Meta.model.objects.exclude(state='Finished').exclude(product__elaboration='Bar').exclude(product__elaboration='Waiter').first()
+            return self.get_serializer().Meta.model.objects.exclude(state='Finished').exclude(product__elaboration='Kitchen').exclude(product__elaboration='Waiter')
+        return self.get_serializer().Meta.model.objects.exclude(state='Finished').exclude(product__elaboration='Kitchen').exclude(product__elaboration='Waiter').first()
 
     
     #method list all items with state exclude Finished
