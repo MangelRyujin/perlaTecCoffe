@@ -14,7 +14,7 @@ class ItemsSerializer(serializers.ModelSerializer):
     aggregateitemItems = AggregateItemsSerializer(many = True)
     class Meta:
         model = Items
-        fields = ('id','cant','amount','order','product','aggregateitemItems')
+        fields = ('id','cant','amount','state','order','product','aggregateitemItems')
         
     def create(self, validated_data):
         aggregateitems_data = validated_data.pop('aggregateitemItems')

@@ -53,12 +53,12 @@ class Order(TimeTransfer):
 # itemsOrder  
 class Items(models.Model):
     """Model definition for Items."""
-    ELABORATION_CHOICES = [
+    STATE_CHOICES = [
         ('Delivered', 'Delivered'),
         ('Elaborating', 'Elaborating'),
         ('Finished', 'Finished'),
     ]
-    state = models.CharField('Item state',max_length=13,default='Delivered' ,choices=ELABORATION_CHOICES, blank=False, null=False)
+    state = models.CharField('Item state',max_length=13,default='Delivered' ,choices=STATE_CHOICES, blank=False, null=False)
     cant = models.PositiveIntegerField('Quantity of product', default=1, blank=False , null=False)
     amount = models.DecimalField('Amount', max_digits=10,  decimal_places=2, blank= False, null= False)
     order = models.ForeignKey(Order,related_name='itemsOrder', on_delete=models.CASCADE, verbose_name='Order',blank=False, null= False)

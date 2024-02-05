@@ -71,7 +71,7 @@ class OrderViewSet(viewsets.GenericViewSet):
         order = get_object_or_404(Order, pk = request.data['order'])
         if order.state =='Unpaid':
             product = get_object_or_404(Product, pk = request.data['product'])
-            data = {'order':order.id , 'product': product.id, 'cant':request.data['cant'], 'amount': Decimal(product.cost*int(request.data['cant'])),'aggregateitemItems':request.data['aggregateitemItems']}
+            data = {'order':order.id , 'product': product.id, 'state':'Delivered','cant':request.data['cant'], 'amount': Decimal(product.cost*int(request.data['cant'])),'aggregateitemItems':request.data['aggregateitemItems']}
             serializer = ItemsSerializer(data = data)
             if serializer.is_valid():
                 serializer.save()
