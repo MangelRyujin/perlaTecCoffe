@@ -153,15 +153,6 @@ class OrderViewSet(viewsets.GenericViewSet):
         return Response({'error':'Esta cuenta ya ha sido pagada'},status=status.HTTP_400_BAD_REQUEST)
     
     
-    def destroy(self, request, pk = None):
-        
-        category = self.get_queryset(pk)
-        if category:
-            category.delete()
-            return Response({'message':'La categoría ha sido eliminado correctamente!'}, status = status.HTTP_200_OK)
-        return Response({'error':'No existe la categoría que desea eliminar!'},status = status.HTTP_404_NOT_FOUND)
-
-
     #method for delete order
     @swagger_auto_schema(manual_parameters=[order])
     @action(detail = False, methods = ['delete'])
@@ -170,13 +161,15 @@ class OrderViewSet(viewsets.GenericViewSet):
         if order.state =='Unpaid':
             order.delete()
             return Response({'message':'Orden cancelada'},status=status.HTTP_200_OK)
-        return Response({'error':'la orden ya esta pagada'},status=status.HTTP_400_BAD_REQUEST)
+        return Response({'error':'La orden ya esta pagada'},status=status.HTTP_400_BAD_REQUEST)
     
     
     #method for delete item of order
     @swagger_auto_schema(manual_parameters=[item])
     @action(detail = False, methods = ['delete'])
-    def createItemOrder(self,request):
+    def deleteItemOrder(self,request):
         item = get_object_or_404(Items, pk = request.data['item'])
-        item.delete()
-        return Response({'message':'Pedido cancelado'},status=status.HTTP_200_OK)
+        if item.state=='Delivered':
+            item.delete()
+            return Response({'message':'Pedido cancelado'},status=status.HTTP_200_OK)
+        return Response({'message':f'Ya se está {item.state}'},status=status.HTTP_400_BAD_REQUEST)

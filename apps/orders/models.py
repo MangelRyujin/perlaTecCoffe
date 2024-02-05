@@ -53,6 +53,12 @@ class Order(TimeTransfer):
 # itemsOrder  
 class Items(models.Model):
     """Model definition for Items."""
+    ELABORATION_CHOICES = [
+        ('Delivered', 'Delivered'),
+        ('Elaborating', 'Elaborating'),
+        ('Finished', 'Finished'),
+    ]
+    state = models.CharField('Item state',max_length=13,default='Delivered' ,choices=ELABORATION_CHOICES, blank=False, null=False)
     cant = models.PositiveIntegerField('Quantity of product', default=1, blank=False , null=False)
     amount = models.DecimalField('Amount', max_digits=10,  decimal_places=2, blank= False, null= False)
     order = models.ForeignKey(Order,related_name='itemsOrder', on_delete=models.CASCADE, verbose_name='Order',blank=False, null= False)
@@ -68,7 +74,18 @@ class Items(models.Model):
     def __str__(self):
         return f'{self.cant}x  {self.product} . Price {self.amount}'
     
-
+    def delivered_state(self):
+        self.state = 'Delivered'
+        self.save()
+        
+    def elaborating_state(self):
+        self.state = 'Elaborating'
+        self.save()
+    
+    def finished_state(self):
+        self.state = 'Finished'
+        self.save()
+    
 class AggregateItems(models.Model):
     """Model definition for AggregateItems."""
     aggregate = models.ForeignKey(Aggregate,related_name='aggregateitemAgregate', on_delete=models.CASCADE, verbose_name='Aggregate',blank=False, null= False)

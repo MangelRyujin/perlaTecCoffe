@@ -24,6 +24,12 @@ class Category(models.Model):
 # Product  
 class Product(models.Model):
     """Model definition for Product."""
+    ELABORATION_CHOICES = [
+        ('Kitchen', 'Kitchen'),
+        ('Bar', 'Bar'),
+        ('Waiter', 'Waiter'),
+    ]
+    elaboration = models.CharField('Order paid',max_length=13,default='Kitchen' ,choices=ELABORATION_CHOICES, blank=False, null=False)
     product_name = models.CharField('Name of product', max_length=255, blank=False , null=False)
     cost = models.DecimalField('Cost', max_digits=10,  decimal_places=2, blank= False, null= False)
     active = models.BooleanField(default=True)
@@ -40,6 +46,7 @@ class Product(models.Model):
 
     def __str__(self):
         return f'id: {self.id}. {self.product_name}'
+    
     
     
 
