@@ -23,7 +23,7 @@ class ItemsKitchenViewSet(viewsets.GenericViewSet):
         return self.get_serializer().Meta.model.objects.exclude(state='Finished').first()
 
     
-    #method list all orders with state Unpaid
+    #method list all items with state exclude Finished
     def list(self, request):
         items = self.get_queryset(None)
         if items:
@@ -31,6 +31,8 @@ class ItemsKitchenViewSet(viewsets.GenericViewSet):
             return Response(items_serializers.data, status= status.HTTP_200_OK)
         return Response({'message':'No existen pedidos'}, status= status.HTTP_404_NOT_FOUND)
     
+    
+    #method modified state of items to Elaborating
     @swagger_auto_schema(manual_parameters=[item])
     @action(detail = False, methods = ['put'])
     def elaboratingStateItem(self,request):
@@ -39,6 +41,8 @@ class ItemsKitchenViewSet(viewsets.GenericViewSet):
         item_serializer = self.serializer_class(item)
         return Response(item_serializer.data,status=status.HTTP_201_CREATED)
     
+    
+    #method modified state of items to Finished
     @swagger_auto_schema(manual_parameters=[item])
     @action(detail = False, methods = ['put'])
     def finishedStateItem(self,request):
