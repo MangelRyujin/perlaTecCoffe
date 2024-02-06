@@ -15,7 +15,8 @@ urlpatterns = [
     path("password/reset/confirm/", PasswordResetConfirmView.as_view(), name="password_reset_confirm"),
     path("token/refresh/", get_refresh_view().as_view(), name="token_refresh"),
     path("token/verify/", TokenVerifyView.as_view(), name="token_verify"),
+    path('register/', user_register ,name='register'),
     path("email/verify/<str:token>/", email_verification, name="email_verify"),
-    path("user/register/", user_register, name="register"),
+    
     
 ]

@@ -21,6 +21,7 @@ from django.views.static import serve
 from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi 
+from apps.users.api.views.userRegister_view import user_register
 
 
 
@@ -47,7 +48,7 @@ urlpatterns = [
     path('notifications/', include('apps.notification.api.routers')),
     path('kitchen/', include('apps.kitchen.api.routers')),
     path('bar/', include('apps.bar.api.routers')),
-    path('accounts/', include('dj_rest_auth.urls')),
+    path('accounts/', include('apps.users.urls')),
     re_path(r'^swagger(?P<format>\.json/\.yaml)$', schema_view.without_ui(cache_timeout=0), name = 'schema-json'),
     path('api-docs/', schema_view.with_ui('swagger',cache_timeout=0), name = 'schema-swagger-ui'),
     path('redoc/', schema_view.with_ui('redoc',cache_timeout=0), name = 'schema-swagger-redoc'),
