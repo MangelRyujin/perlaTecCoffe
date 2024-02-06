@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from apps.users.models import User
 from django.core.exceptions import ValidationError
-
+from django.contrib.auth.models import Group
 
 class RegisterSerializer(serializers.ModelSerializer):
     class Meta:
@@ -18,5 +18,8 @@ class RegisterSerializer(serializers.ModelSerializer):
     
     def create(self, validated_data):
         user = User.objects.create_user(**validated_data)
+        group_name = validated_data.get('user_type')
+        group, created = Group.objects.get_or_create(name=group_name)
+        group.user_set.add(user)
         return user
     
