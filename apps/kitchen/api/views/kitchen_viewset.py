@@ -9,6 +9,7 @@ from drf_yasg import openapi
 from django.shortcuts import get_object_or_404
 from apps.notification.models import Notification
 from apps.orders.models import Items
+from apps.users.permission.chef_permission import ChefGroupPermission
 
 
 item = openapi.Parameter('item', openapi.IN_QUERY, description="enter item", type=openapi.TYPE_NUMBER)
@@ -16,7 +17,7 @@ item = openapi.Parameter('item', openapi.IN_QUERY, description="enter item", typ
 
 class ItemsKitchenViewSet(viewsets.GenericViewSet):
     serializer_class= ItemsKitchenSerializer
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated,ChefGroupPermission)
     
     def get_queryset(self,pk = None):
         if pk is None:

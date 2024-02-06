@@ -4,6 +4,7 @@ from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 from apps.notification.api.serializers.notification_serializer import NotificationsSerializer
 from apps.notification.models import Notification
+from apps.users.permission.waiter_permission import WaiterGroupPermission
 
 
     
@@ -11,7 +12,7 @@ from apps.notification.models import Notification
 
 class NotificationsViewSet(viewsets.GenericViewSet):
     serializer_class= NotificationsSerializer
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated,WaiterGroupPermission)
     
     def get_queryset(self,user = None):
         if user is None:

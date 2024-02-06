@@ -2,12 +2,9 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import viewsets
 from apps.products.api.serializers.products_serializer import CategorySerializer
-from rest_framework.permissions import IsAuthenticated
-
 
 class ProductsViewSet(viewsets.GenericViewSet):
     serializer_class= CategorySerializer
-    # permission_classes = (IsAuthenticated,)
     
     def get_queryset(self,pk = None):
         if pk is None:

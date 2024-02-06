@@ -41,11 +41,13 @@ class User(AbstractBaseUser, PermissionsMixin):
         ('chef', 'chef'),
         ('waiter', 'waiter'),
         ('barman', 'barman'),
+        ('economic', 'economic'),
+        ('administrator', 'administrator'),
       
         # Add other user types here
     )
 
-    user_type = models.CharField(max_length=10, choices=USER_TYPE_CHOICES, default='waiter') 
+    user_type = models.CharField(max_length=13, choices=USER_TYPE_CHOICES, default='waiter') 
     username = models.CharField(validators=[MinLengthValidator(3),validate_alnum],max_length=50, unique=True,blank = False, null= False)
     email = models.EmailField( max_length=50 , unique=True, blank = False, null= False)
     is_active = models.BooleanField(default=True)

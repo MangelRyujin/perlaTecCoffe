@@ -4,10 +4,12 @@ from rest_framework import viewsets
 from apps.restaurant.api.serializers.restaurant_serializer import LocalSerializer
 from rest_framework.permissions import IsAuthenticated
 
+from apps.users.permission.waiter_permission import WaiterGroupPermission
+
 
 class RestaurantViewSet(viewsets.GenericViewSet):
     serializer_class= LocalSerializer
-    # permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated,WaiterGroupPermission)
     
     def get_queryset(self,pk = None):
         if pk is None:

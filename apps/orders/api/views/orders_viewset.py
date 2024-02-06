@@ -13,6 +13,8 @@ from decimal import Decimal
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
 
+from apps.users.permission.waiter_permission import WaiterGroupPermission
+
 
 transfer = openapi.Parameter('transfer', openapi.IN_QUERY, description="enter transfer", type=openapi.TYPE_NUMBER)
 cash = openapi.Parameter('cash', openapi.IN_QUERY, description="enter cash", type=openapi.TYPE_NUMBER)
@@ -24,7 +26,7 @@ item = openapi.Parameter('item', openapi.IN_QUERY, description="enter item", typ
 
 class OrderViewSet(viewsets.GenericViewSet):
     serializer_class= OrderSerializer
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated,WaiterGroupPermission)
     
     def get_queryset(self,pk = None,user = None):
         if pk is None:
