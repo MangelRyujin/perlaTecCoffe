@@ -1,7 +1,7 @@
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.decorators import api_view
-from apps.users.api.serializers.register_serializer import RegisterSerializer
+from apps.users.api.serializers.userRegister_serializer import RegisterSerializer
 
 @api_view(["POST"])
 def user_register(request):

@@ -1,8 +1,6 @@
 from rest_framework import serializers
 from apps.users.models import User
 from django.core.exceptions import ValidationError
-import io
-from django.core.files.base import ContentFile
 
 
 class RegisterSerializer(serializers.ModelSerializer):
