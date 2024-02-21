@@ -16,5 +16,12 @@ class ItemsKitchenSerializer(serializers.ModelSerializer):
         model = Items
         fields = ('id','cant','amount','state','order','product','aggregateitemItems')
     
+    def to_representation(self, instance):
+        # Primero llamamos al método original para obtener la representación básica
+        representation = super().to_representation(instance)
         
+        # Reemplazamos el valor del campo 'product' por su 'product_name'
+        representation['product'] = instance.product.product_name
+        return representation
+
 
